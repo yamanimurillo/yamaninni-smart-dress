@@ -1,12 +1,21 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import HomePage from './homepage.component';
+import HomePage from './pages/homepage/homepage.component';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Link
+} from "react-router-dom";
 
 function App() {
   return (
     <div>
-      <HomePage></HomePage>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<HomePage></HomePage>}></Route>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
