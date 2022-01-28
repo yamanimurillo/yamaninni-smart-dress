@@ -7,6 +7,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import ShopPage from './pages/shop/shoppage.component';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomePage></HomePage>}></Route>
+          <Route path="/shop" element={<ShopPage></ShopPage>}></Route>
         </Routes>
       </BrowserRouter>
     </div>
