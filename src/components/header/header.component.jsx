@@ -6,7 +6,9 @@ import { ReactComponent as Logo } from "../../assets/crown.svg";
 
 import "./header.styles.scss";
 
-const Header = () => {
+import { auth } from '../../firebase/firebase.utils';
+
+const Header = (props) => {
     return (
         <div className="header">
             <Link className="logo-container" to="/">
@@ -21,6 +23,16 @@ const Header = () => {
                 <Link className="option" to="/contact">
                     CONTACT
                 </Link>
+                {
+                    !props.currentUser ?
+                        <Link className="option" to="/signin">
+                            SIGN IN
+                        </Link> :
+                        <div className="option" onClick={() => auth.signOut()}>
+                            {props.currentUser.displayName.split(' ')[0].toUpperCase()} (SIGN OUT)
+                        </div>
+                }
+
             </div>
         </div>
     );
