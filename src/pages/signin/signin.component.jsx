@@ -8,6 +8,8 @@ import CustomButton from "../../components/custom-button/custom-button.component
 
 import { signInWithGoogle } from '../../firebase/firebase.utils';
 
+import SignUp from "../../components/signup/signup.component";
+
 class SignInPage extends React.Component {
     constructor(props) {
         super(props);
@@ -36,6 +38,7 @@ class SignInPage extends React.Component {
 
     render() {
         return (
+            <div className="sign-in-and-sign-up ">
             <div className="sign-in">
                 <h2 className="title">I already have an account</h2>
                 <span>Sign in with you email and password</span>
@@ -66,6 +69,8 @@ class SignInPage extends React.Component {
                     </div>
 
                 </form>
+            </div>
+            <SignUp></SignUp>
             </div>
         );
     };

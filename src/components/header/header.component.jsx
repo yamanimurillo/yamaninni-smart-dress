@@ -29,7 +29,7 @@ const Header = (props) => {
                             SIGN IN
                         </Link> :
                         <div className="option" onClick={() => auth.signOut()}>
-                            {props.currentUser.displayName.split(' ')[0].toUpperCase()} (SIGN OUT)
+                            SIGN OUT
                         </div>
                 }
 
