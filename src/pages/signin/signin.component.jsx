@@ -6,7 +6,7 @@ import FormInput from "../../components/form-input/form-input.component";
 
 import CustomButton from "../../components/custom-button/custom-button.component";
 
-import { signInWithGoogle } from '../../firebase/firebase.utils';
+import { auth, signInWithGoogle } from '../../firebase/firebase.utils';
 
 import SignUp from "../../components/signup/signup.component";
 
@@ -20,13 +20,18 @@ class SignInPage extends React.Component {
         };
     };
 
-    handleSubmit = (event) => {
+    handleSubmit = async (event) => {
         event.preventDefault();
 
-        this.setState({
-            email: '',
-            password: ''
-        });
+        const { email, password } = this.state;
+
+        try {
+            await auth.signInWithEmailAndPassword(email, password);
+            this.setState({ email: '', password: '' });
+        } catch (error) {
+            console.log(error);
+        }
+
     };
 
     handleChange = (event) => {
@@ -39,38 +44,38 @@ class SignInPage extends React.Component {
     render() {
         return (
             <div className="sign-in-and-sign-up ">
-            <div className="sign-in">
-                <h2 className="title">I already have an account</h2>
-                <span>Sign in with you email and password</span>
+                <div className="sign-in">
+                    <h2 className="title">I already have an account</h2>
+                    <span>Sign in with you email and password</span>
 
-                <form onSubmit={this.handleSubmit}>
+                    <form onSubmit={this.handleSubmit}>
 
-                    <FormInput
-                        label="Email"
-                        name="email"
-                        value={this.state.email}
-                        required
-                        handleChange={this.handleChange}>
-                    </FormInput>
+                        <FormInput
+                            label="Email"
+                            name="email"
+                            value={this.state.email}
+                            required
+                            handleChange={this.handleChange}>
+                        </FormInput>
 
-                    <FormInput
-                        label="Password"
-                        name="password"
-                        type="password"
-                        value={this.state.password}
-                        required
-                        handleChange={this.handleChange}>
-                    </FormInput>
+                        <FormInput
+                            label="Password"
+                            name="password"
+                            type="password"
+                            value={this.state.password}
+                            required
+                            handleChange={this.handleChange}>
+                        </FormInput>
 
-                    <div className="buttons">
-                        <CustomButton type="submit">Sign in</CustomButton>
+                        <div className="buttons">
+                            <CustomButton type="submit" onSubmit={this.handleSubmit}>Sign in</CustomButton>
 
-                        <CustomButton isGoogleSignIn onClick={signInWithGoogle}>Google sign in</CustomButton>
-                    </div>
+                            <CustomButton isGoogleSignIn onClick={signInWithGoogle}>Google sign in</CustomButton>
+                        </div>
 
-                </form>
-            </div>
-            <SignUp></SignUp>
+                    </form>
+                </div>
+                <SignUp></SignUp>
             </div>
         );
     };
