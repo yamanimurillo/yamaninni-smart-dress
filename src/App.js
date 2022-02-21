@@ -1,11 +1,6 @@
 import React from 'react';
 import './App.css';
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Link
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import HomePage from './pages/home/home.component';
 import ShopPage from './pages/shop/shop.component';
 import Header from './components/header/header.component';
@@ -46,7 +41,7 @@ class App extends React.Component {
       }
 
       setCurrentUser(user)
-      
+
       //this.setState({ currentUser: user })
     });
   };
@@ -63,11 +58,17 @@ class App extends React.Component {
           <Routes>
             <Route path="/" element={<HomePage></HomePage>}></Route>
             <Route path="/shop" element={<ShopPage></ShopPage>}></Route>
-            <Route path="/signin" element={<SignInPage></SignInPage>}></Route>
+            <Route path="/signin" element={this.props.currentUser ? <Navigate to='/'></Navigate> : <SignInPage></SignInPage>}></Route>
           </Routes>
         </BrowserRouter>
       </div>
     );
+  }
+}
+
+const mapStateToProps = ({ user }) => {
+  return {
+    currentUser: user.currentUser
   }
 }
 
@@ -77,4 +78,4 @@ const mapDispatchTpProps = (dispatch) => {
   }
 };
 
-export default connect(null, mapDispatchTpProps)(App);
+export default connect(mapStateToProps, mapDispatchTpProps)(App);
