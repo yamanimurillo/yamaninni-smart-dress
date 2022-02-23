@@ -3,11 +3,13 @@ import './App.css';
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import HomePage from './pages/home/home.component';
 import ShopPage from './pages/shop/shop.component';
+import CheckoutPage from './pages/checkout/checkout.component';
 import Header from './components/header/header.component';
 import SignInPage from './pages/signin/signin.component';
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 import { connect } from 'react-redux';
 import { setCurrentUser } from './redux/user/user.actions';
+import { selectCurrentUser } from './redux/user/user.selector';
 
 class App extends React.Component {
 
@@ -58,6 +60,7 @@ class App extends React.Component {
           <Routes>
             <Route path="/" element={<HomePage></HomePage>}></Route>
             <Route path="/shop" element={<ShopPage></ShopPage>}></Route>
+            <Route exact path="/checkout" element={<CheckoutPage></CheckoutPage>}></Route>
             <Route path="/signin" element={this.props.currentUser ? <Navigate to='/'></Navigate> : <SignInPage></SignInPage>}></Route>
           </Routes>
         </BrowserRouter>
@@ -66,9 +69,9 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = ({ user }) => {
+const mapStateToProps = (state) => {
   return {
-    currentUser: user.currentUser
+    currentUser: selectCurrentUser(state) 
   }
 }
 
