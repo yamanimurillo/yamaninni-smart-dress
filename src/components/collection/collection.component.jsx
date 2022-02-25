@@ -13,7 +13,6 @@ const Collection = ({ collection, category }) => {
             <div className="items">
                 {
                     collection.items.map(item => {
-
                         return (
                             <CollectionItem key={item.id} item={item}></CollectionItem>
                         )
