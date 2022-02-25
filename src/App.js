@@ -58,10 +58,11 @@ class App extends React.Component {
         <BrowserRouter>
           <Header></Header>
           <Routes>
-            <Route path="/" element={<HomePage></HomePage>}></Route>
-            <Route path="/shop" element={<ShopPage></ShopPage>}></Route>
+            <Route exact path="/" element={<HomePage></HomePage>}></Route>
+            <Route exact path="/shop" element={<ShopPage></ShopPage>}></Route>
+            <Route exact path="/shop/:category" element={<ShopPage></ShopPage>}></Route>
             <Route exact path="/checkout" element={<CheckoutPage></CheckoutPage>}></Route>
-            <Route path="/signin" element={this.props.currentUser ? <Navigate to='/'></Navigate> : <SignInPage></SignInPage>}></Route>
+            <Route exact path="/signin" element={this.props.currentUser ? <Navigate to='/'></Navigate> : <SignInPage></SignInPage>}></Route>
           </Routes>
         </BrowserRouter>
       </div>

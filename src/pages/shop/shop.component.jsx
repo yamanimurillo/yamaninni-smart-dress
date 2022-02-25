@@ -1,37 +1,36 @@
 import React from "react";
-
-import SHOP_DATA from './shop.data.js';
-
+import { connect } from "react-redux";
+import { useParams } from "react-router";
+import { createStructuredSelector } from "reselect";
+import Collection from "../../components/collection/collection.component";
 import CollectionPreview from "../../components/collection-preview/collection-preview.component";
+import CollectionsOverview from "../../components/collections-overview/collections-overview.component";
+import { selectShopCollections } from "../../redux/shop/shop.selectors";
 
 import "./shop.styles.scss";
 
-class ShopPage extends React.Component {
-    constructor(props) {
-        super(props);
+const ShopPage = () => {
 
-        this.state = {
-            collections: SHOP_DATA
-        };
-    };
-
-    render() {
-
-        const { collections } = this.state;
-        return <div className="shop-page">
-            <h2>Our collections</h2>
-            {
-                collections.map(collection => (
-                    <CollectionPreview
-                        key={collection.id}
-                        title={collection.title}
-                        items={collection.items}>
-
-                    </CollectionPreview>
-                ))
-            }
-        </div>
-    };
+    let params = useParams();
+    if (!params || !params.category) {
+        return (
+            <div className="shop-page">
+                <h2>Our collections</h2>
+                <CollectionsOverview></CollectionsOverview>
+            </div>
+        );
+    } else {
+        return (
+            <div className="shop-page">
+                <Collection category={params.category}></Collection>
+            </div>
+        );
+    }
 };
 
-export default ShopPage;
+const mapStateToProps = createStructuredSelector({
+    collections: selectShopCollections
+}
+);
+
+export default connect(mapStateToProps)(ShopPage);
